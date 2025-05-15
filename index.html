@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<header style="
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #004080;
+    letter-spacing: 1px;">
+    🧠 Multi-Class Depression Detection <br> <span style="font-size: 20px; font-weight: normal;">
+        From User-Generated Text
+    </span>
+</header>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Depression Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f2f7ff, #d9e8ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: none;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .result span {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="margin-top: 10px;">Let's Begin...</h2>
+        <form method="POST">
+            <textarea id="user_input" rows="6" placeholder="Type your message to detect Depression..."></textarea>
+            <Button id="checkBtn">Check</Button>
+        </form>
+
+        <div class="result">
+            Prediction Result: <span id="predictionText"></span>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.getElementById('checkBtn').addEventListener('click', function (e) {
+        e.preventDefault(); // Stop normal form submit
+
+        const user_input = document.getElementById('user_input').value;
+        document.getElementById('predictionText').innerText = ''
+
+        fetch('https://743b-73-198-173-174.ngrok-free.app', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({ user_input: user_input })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data)
+                const prediction = data;
+                document.getElementById('predictionText').innerText = prediction
+                return data
+            })
+            .catch(error => {
+                alert(error)
+            });
+    });
+</script>
+
+</html>
+
+</div>
+
+<footer style="
+position: absolute;
+bottom: 10px;
+width: 100%;
+text-align: center;
+font-size: 18px;
+color: #555;">
+    © Developed by MindScope. All rights reserved.
+</footer>
